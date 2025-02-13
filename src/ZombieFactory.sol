@@ -21,7 +21,7 @@ contract ZombieFactory {
     
     // the _name variable should be stored in memory, this is required for all references types
     // such as arrays, structs, mappings and strings.
-    function _createZombie(string memory _name, uint256 _dna) private {
+    function _createZombie(string memory _name, uint256 _dna) internal {
         uint256 id = zombies.length;
         zombies.push(Zombie(_name, _dna));
 
@@ -43,6 +43,7 @@ contract ZombieFactory {
 
     // create a random zombie with the given name. This is the main entry point for creating a new zombie.
     function createRandomZombie(string memory _name) public {
+        require(ownerZombieCount[msg.sender] == 0, "You can only have one zombie");
         uint256 randDna = _generateRandomDna(_name);
         _createZombie(_name, randDna);
     }
