@@ -2,7 +2,7 @@ pragma solidity ^0.8.13;
 
 import "./ZombieFactory.sol";
 
-contract KittyInterface {
+interface KittyInterface {
     function getKitty(uint256 _id)
         external
         view
