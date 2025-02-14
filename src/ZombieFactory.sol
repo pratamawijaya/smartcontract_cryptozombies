@@ -12,6 +12,11 @@ contract ZombieFactory is Ownable {
 
     uint256 dnaDigits = 16;
     uint256 dnaModulus = 10 ** dnaDigits;
+
+    // Solidity also contains the time units seconds, minutes, hours, days, weeks and years.
+    // These will convert to a uint of the number of seconds in that length of time.
+    // So 1 minutes is 60, 1 hours is 3600 (60 seconds x 60 minutes),
+    // 1 days is 86400 (24 hours x 60 minutes x 60 seconds), etc.
     uint256 cooldownTime = 1 days;
 
     struct Zombie {
