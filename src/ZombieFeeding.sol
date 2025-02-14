@@ -21,8 +21,16 @@ interface KittyInterface {
 }
 
 contract ZombieFeeding is ZombieFactory {
-    address ckAddress = 0x06012c8cf97BEaD5deAe237070F9587f8E7A266d;
-    KittyInterface kittyContract = KittyInterface(ckAddress);
+    KittyInterface kittyContract;
+
+    // setKittyContractAddress is external, so anyone can call it!
+    // That means anyone who called the function could change the address of the CryptoKitties contract,
+    // and break our app for all its users.
+    //
+    // so we need implement Ownable, make the contract has an Owner
+    function setKittyContractAddress(address _address) external onlyOwner {
+        kittyContract = KittyInterface(_address);
+    }
 
     function feedAndMultiply(uint256 _zombieId, uint256 _targetDna, string memory _species) public {
         require(msg.sender == zombieToOwner[_zombieId]);

@@ -1,6 +1,8 @@
 pragma solidity ^0.8.28;
 
-contract ZombieFactory {
+import "./Ownable.sol";
+
+contract ZombieFactory is Ownable {
     // event
     event zombie_created(uint256 zombieId, string name, uint256 dna);
 
@@ -10,10 +12,13 @@ contract ZombieFactory {
 
     uint256 dnaDigits = 16;
     uint256 dnaModulus = 10 ** dnaDigits;
+    uint256 cooldownTime = 1 days;
 
     struct Zombie {
         string name;
         uint256 dna;
+        uint32 level;
+        uint32 readyTime;
     }
 
     Zombie[] public zombies;
@@ -22,7 +27,7 @@ contract ZombieFactory {
     // such as arrays, structs, mappings and strings.
     function _createZombie(string memory _name, uint256 _dna) internal {
         uint256 id = zombies.length;
-        zombies.push(Zombie(_name, _dna));
+        zombies.push(Zombie(_name, _dna, 1, uint32(block.timestamp + cooldownTime)));
 
         zombieToOwner[id] = msg.sender; // set the owner of the newly created zombie.
         ownerZombieCount[msg.sender]++; // increment the count of zombies owned by the sender.
