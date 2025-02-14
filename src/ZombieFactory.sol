@@ -1,13 +1,12 @@
 pragma solidity ^0.8.13;
 
 contract ZombieFactory {
-
     // event
     event zombie_created(uint256 zombieId, string name, uint256 dna);
 
     // mapping
-    mapping(uint => address) public zombieToOwner; // maps the owner of a zombie to its ID.
-    mapping(address => uint) ownerZombieCount; // keeps track of how many zombies an owner has.
+    mapping(uint256 => address) public zombieToOwner; // maps the owner of a zombie to its ID.
+    mapping(address => uint256) ownerZombieCount; // keeps track of how many zombies an owner has.
 
     uint256 dnaDigits = 16;
     uint256 dnaModulus = 10 ** dnaDigits;
@@ -18,7 +17,7 @@ contract ZombieFactory {
     }
 
     Zombie[] public zombies;
-    
+
     // the _name variable should be stored in memory, this is required for all references types
     // such as arrays, structs, mappings and strings.
     function _createZombie(string memory _name, uint256 _dna) internal {
